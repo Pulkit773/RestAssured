@@ -1,0 +1,26 @@
+{
+	"dev1": {
+		"debugAuthToken": "4E954E321A7864F53547CBCD0BCB0550",
+		"dbconfig": {
+			"username": "remotereadonly",
+			"password": "test123",
+			"url": "jdbc:mysql://dev1-db01.dev.pdx10.clover.network",
+			"driverClassName": "com.mysql.jdbc.Driver"
+		},
+		"providerId": {
+			"colo": 5
+		}
+	},
+	"stg1": {
+		"debugAuthToken": "12526D25E1BB51987B93260062691D34",
+		"dbconfig": {
+			"username": "remotereadonly",
+			"password": "test123",
+			"url": "jdbc:mysql://db-stg1-shard000.dev.pdx10.clover.network",
+			"driverClassName": "com.mysql.jdbc.Driver"
+		},
+		"providerId": {
+			"colo": 4
+		}
+	}
+}
