@@ -36,42 +36,9 @@ public class SubmitApp extends BaseTest {
         Response response = LeadAPI.put(requestCreateLead);
         assertThat(response.statusCode(), equalTo(StatusCode.CODE_200.getCode()));
         LeadResponse actualResponseLead = response.as(LeadResponse.class);
-       /* String url = "jdbc:mysql://127.0.0.1:3306/growth?useSSL=false&allowPublicKeyRetrieval=true";
-        String username = "growth-api";
-        String password = "test123";
-        String driver = "com.mysql.cj.jdbc.Driver";
-        DriverManagerDataSource dataSource = new DriverManagerDataSource();
-        dataSource.setDriverClassName(driver);
-        dataSource.setUrl(url);
-        dataSource.setUsername(username);
-        dataSource.setPassword(password);
-        jdbc = new JdbcTemplate(dataSource);
-        String query = "Select * from growth.merchant_lead where email = 'pulkit.agrawal+4353746031@clover.com' order by created_time desc";
-        Map<String, Object> abc  = jdbc.queryForMap(query);
-        System.out.println(abc);*/
 
         ResultSet rs = dbConnection();
         List<LeadResponse> responseList = convertSQLResultSetToObject(rs, LeadResponse.class);
-//        JSONArray json = new JSONArray();
-//        ResultSetMetaData rsmd = rs.getMetaData();
-//        while(rs.next()) {
-//            int numColumns = rsmd.getColumnCount();
-//            JSONObject obj = new JSONObject();
-//            for (int i=1; i<=numColumns; i++) {
-//                String column_name = rsmd.getColumnName(i);
-//                obj.put(column_name, rs.getObject(column_name));
-//            }
-//            json.put(obj);
-//        }
-
-
-
-        /*QueryRunner run = new QueryRunner(dataSource);
-        ResultSetHandler<LeadResponse> h = new BeanHandler<LeadResponse>(LeadResponse.class);
-        LeadResponse p = run.query("Select * from growth.merchant_lead where email = 'pulkit.agrawal+testingtoday@clover.com' order by created_time desc", h);
-        System.out.println(LeadResponse.class);*/
-        //List<LeadResponse> responseList = convertSQLResultSetToObject(rs, LeadResponse.class);
-
     }
 
     public static <T> List<T> convertSQLResultSetToObject(ResultSet resultSet, Class<T> clazz) throws SQLException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
@@ -79,7 +46,6 @@ public class SubmitApp extends BaseTest {
         for (Field field : fields) {
             field.setAccessible(true);
         }
-
         List<T> list = new ArrayList<>();
         while (resultSet.next()) {
 
@@ -94,11 +60,8 @@ public class SubmitApp extends BaseTest {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-
             }
-
             list.add(dto);
-
         }
         return list;
     }
@@ -112,3 +75,35 @@ public class SubmitApp extends BaseTest {
 
 }
 
+ /* String url = "jdbc:mysql://127.0.0.1:3306/growth?useSSL=false&allowPublicKeyRetrieval=true";
+        String username = "growth-api";
+        String password = "test123";
+        String driver = "com.mysql.cj.jdbc.Driver";
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName(driver);
+        dataSource.setUrl(url);
+        dataSource.setUsername(username);
+        dataSource.setPassword(password);
+        jdbc = new JdbcTemplate(dataSource);
+        String query = "Select * from growth.merchant_lead where email = 'pulkit.agrawal+4353746031@clover.com' order by created_time desc";
+        Map<String, Object> abc  = jdbc.queryForMap(query);
+        System.out.println(abc);*/
+
+
+//        JSONArray json = new JSONArray();
+//        ResultSetMetaData rsmd = rs.getMetaData();
+//        while(rs.next()) {
+//            int numColumns = rsmd.getColumnCount();
+//            JSONObject obj = new JSONObject();
+//            for (int i=1; i<=numColumns; i++) {
+//                String column_name = rsmd.getColumnName(i);
+//                obj.put(column_name, rs.getObject(column_name));
+//            }
+//            json.put(obj);
+//        }
+
+  /*QueryRunner run = new QueryRunner(dataSource);
+        ResultSetHandler<LeadResponse> h = new BeanHandler<LeadResponse>(LeadResponse.class);
+        LeadResponse p = run.query("Select * from growth.merchant_lead where email = 'pulkit.agrawal+testingtoday@clover.com' order by created_time desc", h);
+        System.out.println(LeadResponse.class);*/
+//List<LeadResponse> responseList = convertSQLResultSetToObject(rs, LeadResponse.class);
