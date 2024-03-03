@@ -14,7 +14,7 @@ import java.util.List;
 public class Order {
 
     @JsonProperty("uuid")
-    private String uuid;
+    private String order_uuid;
 
     @JsonProperty("hasSubscriptions")
     private Boolean hasSubscriptions;

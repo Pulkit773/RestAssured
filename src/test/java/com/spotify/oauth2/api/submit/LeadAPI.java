@@ -16,7 +16,6 @@ public class LeadAPI {
     @Step
     public static Response put(Lead requestCreateLead) {
         return RestResource.putLead("/growth/shop/v2/leads", requestCreateLead);
-        //return RestResource.post(USERS + "/" + ConfigLoader.getInstance().getUserId() + PLAYLISTS, getToken(), requestPlayList);
     }
 
     public static Response post(String token, PlayList requestPlayList) {

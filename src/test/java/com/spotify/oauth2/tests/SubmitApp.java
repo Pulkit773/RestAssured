@@ -27,8 +27,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 
 public class SubmitApp extends BaseTest {
-    private JdbcTemplate jdbc;
-
 
     @Test
     public void shouldBeAbleToCreateLead() throws SQLException, ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {

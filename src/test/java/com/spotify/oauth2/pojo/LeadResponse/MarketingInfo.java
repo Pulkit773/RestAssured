@@ -12,6 +12,6 @@ import lombok.Setter;
 public class MarketingInfo {
 
     @JsonProperty("utm_campaign")
-    private String utmCampaign;
+    private String utm_campaign;
 
 }

@@ -1,0 +1,82 @@
+<div>PUT to https://dev1.dev.clover.com/growth/shop/v2/leads</div>
+
+<h4>Body</h4>
+<div>
+    <pre class="preformated-text">
+{
+    &quot;email&quot;: &quot;pulkit.agrawal+4353746031@clover.com&quot;,
+    &quot;firstName&quot;: &quot;FNkdsKl&quot;,
+    &quot;lastName&quot;: &quot;LNJNEHA&quot;,
+    &quot;phoneNumber&quot;: &quot;4084120645&quot;,
+    &quot;businessName&quot;: &quot;MMIS Test 1709025193425&quot;,
+    &quot;marketingInfo&quot;: {
+        &quot;utm_campaign&quot;: &quot;Clover_Commerce_WhereToBuy&quot;
+    },
+    &quot;activityType&quot;: &quot;upsertGrowthLead_c&quot;,
+    &quot;resellerUuid&quot;: &quot;47HMNNZ9BPF8E&quot;,
+    &quot;salesforceOwnerId&quot;: &quot;00G7j000001EdZdEAK&quot;,
+    &quot;chainAgentId&quot;: &quot;526975216882&quot;,
+    &quot;order&quot;: {
+        &quot;planId&quot;: &quot;4NKNCTE5RGV5P&quot;,
+        &quot;shippingAddress&quot;: {
+            &quot;city&quot;: &quot;New York&quot;,
+            &quot;lineOne&quot;: &quot;131 Varick St&quot;,
+            &quot;lineTwo&quot;: &quot;11&quot;,
+            &quot;state&quot;: &quot;NY&quot;,
+            &quot;zipCode&quot;: &quot;10014&quot;
+        },
+        &quot;items&quot;: [
+            {
+                &quot;digitalCatalogId&quot;: &quot;FLEX_GEN_3&quot;,
+                &quot;fdmpId&quot;: &quot;777-1000108721&quot;,
+                &quot;quantity&quot;: 1,
+                &quot;purchaseType&quot;: &quot;P&quot;
+            }
+        ]
+    }
+}    </pre>
+</div>
+
+<h4>Headers</h4>
+<div>
+        <div>Accept: */*</div>
+        <div>Content-Type: application/json</div>
+</div>
+
+
+
+<h4>Curl</h4>
+<div>
+curl -v -X PUT &#39;https://dev1.dev.clover.com/growth/shop/v2/leads&#39; -H &#39;Accept: */*&#39; -H &#39;Content-Type: application/json&#39; -d &#39;{
+    &quot;email&quot;: &quot;pulkit.agrawal+4353746031@clover.com&quot;,
+    &quot;firstName&quot;: &quot;FNkdsKl&quot;,
+    &quot;lastName&quot;: &quot;LNJNEHA&quot;,
+    &quot;phoneNumber&quot;: &quot;4084120645&quot;,
+    &quot;businessName&quot;: &quot;MMIS Test 1709025193425&quot;,
+    &quot;marketingInfo&quot;: {
+        &quot;utm_campaign&quot;: &quot;Clover_Commerce_WhereToBuy&quot;
+    },
+    &quot;activityType&quot;: &quot;upsertGrowthLead_c&quot;,
+    &quot;resellerUuid&quot;: &quot;47HMNNZ9BPF8E&quot;,
+    &quot;salesforceOwnerId&quot;: &quot;00G7j000001EdZdEAK&quot;,
+    &quot;chainAgentId&quot;: &quot;526975216882&quot;,
+    &quot;order&quot;: {
+        &quot;planId&quot;: &quot;4NKNCTE5RGV5P&quot;,
+        &quot;shippingAddress&quot;: {
+            &quot;city&quot;: &quot;New York&quot;,
+            &quot;lineOne&quot;: &quot;131 Varick St&quot;,
+            &quot;lineTwo&quot;: &quot;11&quot;,
+            &quot;state&quot;: &quot;NY&quot;,
+            &quot;zipCode&quot;: &quot;10014&quot;
+        },
+        &quot;items&quot;: [
+            {
+                &quot;digitalCatalogId&quot;: &quot;FLEX_GEN_3&quot;,
+                &quot;fdmpId&quot;: &quot;777-1000108721&quot;,
+                &quot;quantity&quot;: 1,
+                &quot;purchaseType&quot;: &quot;P&quot;
+            }
+        ]
+    }
+}&#39;
+</div>

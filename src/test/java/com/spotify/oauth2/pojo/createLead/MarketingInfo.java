@@ -12,9 +12,9 @@ import lombok.Setter;
 public class MarketingInfo {
 
     @JsonProperty("utm_campaign")
-    private String utmCampaign;
+    private String utm_campaign;
 
     public MarketingInfo(){
-        this.utmCampaign = "Clover_Commerce_WhereToBuy";
+        this.utm_campaign = "Clover_Commerce_WhereToBuy";
     }
 }

@@ -14,7 +14,6 @@ public class SpecBuilder {
     public static RequestSpecification getRequestSpec() {
         return new RequestSpecBuilder().
                 setBaseUri("https://dev1.dev.clover.com").
-                //setBasePath(BASE_PATH).
                 setContentType(ContentType.JSON).
                 addFilter(new AllureRestAssured()).
                 log(LogDetail.ALL).build();

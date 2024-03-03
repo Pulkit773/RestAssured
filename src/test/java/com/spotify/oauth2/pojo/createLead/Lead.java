@@ -1,5 +1,6 @@
 package com.spotify.oauth2.pojo.createLead;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
@@ -10,6 +11,7 @@ import static com.spotify.oauth2.utils.FakerUtils.*;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Lead {
 
     @JsonProperty("email")
