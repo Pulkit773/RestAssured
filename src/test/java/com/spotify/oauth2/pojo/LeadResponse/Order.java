@@ -20,31 +20,24 @@ public class Order {
     private String uuid;
 
     @JsonProperty("hasSubscriptions")
-    @EqualsAndHashCode.Exclude
     private Boolean hasSubscriptions;
 
     @JsonProperty("planId")
-    @EqualsAndHashCode.Exclude
     private String planId;
 
     @JsonProperty("planName")
-    @EqualsAndHashCode.Exclude
     private String planName;
 
     @JsonProperty("keyedInRate")
-    @EqualsAndHashCode.Exclude
     private KeyedInRate keyedInRate;
 
     @JsonProperty("inPersonRate")
-    @EqualsAndHashCode.Exclude
     private InPersonRate inPersonRate;
 
     @JsonProperty("shippingAddress")
-    @EqualsAndHashCode.Exclude
     private ShippingAddress shippingAddress;
 
     @JsonProperty("items")
-    @EqualsAndHashCode.Exclude
     private List<Item> items;
 
 }

@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.EqualsExclude;
 @Getter
 @Setter
 @JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(value = {"createdTime","modifiedTime"},ignoreUnknown = true)
+//@JsonIgnoreProperties(value = {"createdTime","modifiedTime"},ignoreUnknown = true)
 public class LeadResponse {
 
     @JsonProperty("uuid")
@@ -59,11 +59,9 @@ public class LeadResponse {
     private String activityType;
 
     @JsonProperty("createdTime")
-    @EqualsAndHashCode.Exclude
     private String created_time;
 
     @JsonProperty("modifiedTime")
-    @EqualsAndHashCode.Exclude
     private String modified_time;
 
 

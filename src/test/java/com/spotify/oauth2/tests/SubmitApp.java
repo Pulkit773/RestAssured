@@ -1,58 +1,31 @@
 package com.spotify.oauth2.tests;
 
-import com.fasterxml.jackson.core.JsonParser;
+
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import com.spotify.oauth2.api.StatusCode;
 import com.spotify.oauth2.api.submit.LeadAPI;
 import com.spotify.oauth2.pojo.LeadResponse.LeadResponse;
 import com.spotify.oauth2.pojo.LeadResponse.MarketingInfo;
 import com.spotify.oauth2.pojo.LeadResponse.Order;
 import com.spotify.oauth2.pojo.createLead.Lead;
+import com.spotify.oauth2.utils.ObjectMapperHelper;
 import io.qameta.allure.Step;
 import io.restassured.response.Response;
-import org.apache.commons.dbutils.QueryRunner;
-import org.apache.commons.dbutils.ResultSetHandler;
-import org.apache.commons.dbutils.handlers.BeanHandler;
-import org.apache.commons.lang3.BooleanUtils;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.skyscreamer.jsonassert.JSONCompare;
-import org.skyscreamer.jsonassert.JSONCompareMode;
-import org.skyscreamer.jsonassert.JSONCompareResult;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.testng.annotations.Test;
+import org.unitils.reflectionassert.ReflectionComparatorFactory;
+import org.unitils.reflectionassert.ReflectionComparatorMode;
+import org.unitils.reflectionassert.difference.Difference;
+import org.unitils.reflectionassert.report.impl.DefaultDifferenceReport;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.util.*;
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
+import java.util.ArrayList;
 
-//import org.unitils.reflectionassert.ReflectionComparatorFactory;
-//import org.unitils.reflectionassert.ReflectionComparatorMode;
-//import org.unitils.reflectionassert.difference.Difference;
-//import org.unitils.reflectionassert.report.impl.DefaultDifferenceReport;
-
-import static com.spotify.oauth2.utils.DbUtils.dbConnection;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.testng.Assert.*;
 
 public class SubmitApp extends BaseTest {
     private Statement stmt = null;
@@ -60,14 +33,15 @@ public class SubmitApp extends BaseTest {
 
     @Test
     public void shouldBeAbleToCreateLead() throws Exception {
-        String query = "Select * from growth.merchant_lead where email = 'pulkit.agrawal+testingtoday@clover.com' order by created_time desc";
+        String query = "Select * from growth.merchant_lead where email = 'pulkit.agrawal+testingtoday@lover.com' order by created_time desc";
         Lead requestCreateLead = leadBuilder();
         Response response = LeadAPI.put(requestCreateLead);
         assertThat(response.statusCode(), equalTo(StatusCode.CODE_200.getCode()));
         LeadResponse actualResponseLead = response.as(LeadResponse.class);
         JSONArray jsonArray = getDataRows(query);
         LeadResponse expectedResponse = getExpectedResponse(jsonArray);
-        boolean result = comparePOJO(actualResponseLead,expectedResponse);
+        String report = compareObjects(expectedResponse, actualResponseLead);
+        System.out.println(report);
     }
 
     @Step
@@ -76,11 +50,25 @@ public class SubmitApp extends BaseTest {
         return lead;
     }
 
+    public static String compareObjects(Object obj1, Object obj2) {
+        String report = null;
+        try {
+            Difference difference = ReflectionComparatorFactory
+                    .createRefectionComparator(new ReflectionComparatorMode[]{ReflectionComparatorMode.LENIENT_ORDER,
+                            ReflectionComparatorMode.IGNORE_DEFAULTS})
+                    .getDifference(obj1, obj2);
+            System.out.println("Difference object " + ObjectMapperHelper.objectToString(difference));
+            if (difference != null) {
+                DefaultDifferenceReport diffReport = new DefaultDifferenceReport();
+                report = diffReport.createReport(difference);
+            }
+            return difference != null ? report : null;
+        } catch (Exception e) {
+            e.printStackTrace();
 
-    public static boolean comparePOJO(Object obj1, Object obj2) {
-        return obj1.equals(obj2);
+        }
+        return report;
     }
-
 
     public LeadResponse getExpectedResponse(JSONArray jsonArray) throws JSONException, JsonProcessingException {
         LeadResponse expectedResponse = new LeadResponse();
@@ -93,7 +81,7 @@ public class SubmitApp extends BaseTest {
         expectedResponse.setPhone_number(jsonObject.get("phone_number").toString());
         expectedResponse.setMarketing_info(new ObjectMapper().readValue(jsonObject.get("marketing_info").toString(), MarketingInfo.class));
         expectedResponse.setReseller_uuid(jsonObject.get("reseller_uuid").toString());
-        String orderStr = "{\"uuid\":\""+jsonObject.get("order_uuid").toString()+"\"}";
+        String orderStr = "{\"uuid\":\"" + jsonObject.get("order_uuid").toString() + "\"}";
         expectedResponse.setOrder(new ObjectMapper().readValue(orderStr, Order.class));
         expectedResponse.setSalesforce_id(jsonObject.get("salesforce_id").toString());
         expectedResponse.setSalesforce_owner_id(jsonObject.get("salesforce_owner_id").toString());
@@ -145,6 +133,10 @@ public class SubmitApp extends BaseTest {
             }
         }
     }
+}
+    /*public static boolean comparePOJO(Object obj1, Object obj2) {
+        return obj1.equals(obj2);
+    }
 
     public static boolean deepCompare(Object o1, Object o2) {
         try {
@@ -190,10 +182,7 @@ public class SubmitApp extends BaseTest {
             list.add(dto);
         }
         return list;
-    }
-
-}
-
+    }*/
 
  /* String url = "jdbc:mysql://127.0.0.1:3306/growth?useSSL=false&allowPublicKeyRetrieval=true";
         String username = "growth-api";
@@ -205,7 +194,7 @@ public class SubmitApp extends BaseTest {
         dataSource.setUsername(username);
         dataSource.setPassword(password);
         jdbc = new JdbcTemplate(dataSource);
-        String query = "Select * from growth.merchant_lead where email = 'pulkit.agrawal+4353746031@clover.com' order by created_time desc";
+        String query = "Select * from growth.merchant_lead where email = 'pulkit.agrawal+4353746031@lover.com' order by created_time desc";
         Map<String, Object> abc  = jdbc.queryForMap(query);
         System.out.println(abc);*/
 
@@ -237,7 +226,7 @@ public class SubmitApp extends BaseTest {
 
   /*QueryRunner run = new QueryRunner(dataSource);
         ResultSetHandler<LeadResponse> h = new BeanHandler<LeadResponse>(LeadResponse.class);
-        LeadResponse p = run.query("Select * from growth.merchant_lead where email = 'pulkit.agrawal+testingtoday@clover.com' order by created_time desc", h);
+        LeadResponse p = run.query("Select * from growth.merchant_lead where email = 'pulkit.agrawal+testingtoday@lover.com' order by created_time desc", h);
         System.out.println(LeadResponse.class);*/
 //List<LeadResponse> responseList = convertSQLResultSetToObject(rs, LeadResponse.class);
 
@@ -248,23 +237,5 @@ public class SubmitApp extends BaseTest {
 
 
 // assertEquals(mapper.readTree(response),mapper.read);
-/*
-public static String compareObjects(Object obj1, Object obj2) {
-    String report = null;
-    try {
-        Difference difference = ReflectionComparatorFactory
-                .createRefectionComparator(new ReflectionComparatorMode[]{ReflectionComparatorMode.LENIENT_ORDER,
-                        ReflectionComparatorMode.IGNORE_DEFAULTS})
-                .getDifference(obj1, obj2);
-        System.out.println("Difference object " + ObjectMapperHelper.objectToString(difference));
-        if (difference != null) {
-            DefaultDifferenceReport diffReport = new DefaultDifferenceReport();
-            report = diffReport.createReport(difference);
-        }
-        return difference != null ? report : null;
-    } catch (Exception e) {
-        e.printStackTrace();
 
-    }
-    return report;
-}*/
+

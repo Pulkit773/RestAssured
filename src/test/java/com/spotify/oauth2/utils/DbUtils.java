@@ -4,6 +4,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
+/*import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;*/
 
 import java.sql.*;
 import java.util.List;
@@ -31,8 +33,7 @@ public class DbUtils {
         jdbc = new JdbcTemplate(dataSource);
         logger.info("init jdbc template: {}", url);
     }
-
-    public Object readValue(String query) {
+   public Object readValue(String query) {
         return jdbc.queryForObject(query, Object.class);
     }
 
@@ -45,19 +46,19 @@ public class DbUtils {
     }
 
     // It will be removed in the coming days when API for updating online_order_provider_platform_order_fees table will be available.
-    public void updateRows(final String sql) {
+    /*public void updateRows(final String sql) {
         jdbc.batchUpdate(new String[]{sql});
-    }
+    }*/
 
     public static ResultSet dbConnection() throws ClassNotFoundException, SQLException {
         Connection con = null;
         Statement stmt;
         String DB_URL = "jdbc:mysql://127.0.0.1:3301/growth?useSSL=false&allowPublicKeyRetrieval=true";
-        //String DB_URL = "jdbc:mysql://dev1-db01.dev.pdx10.clover.network:3306/meta?useSSL=false&allowPublicKeyRetrieval=true";
+        //String DB_URL = "jdbc:mysql://dev1-db01.dev.pdx10.lover.network:3306/meta?useSSL=false&allowPublicKeyRetrieval=true";
         String DB_USER = "growth-api";
         //String DB_USER = "remotereadonly";
         String DB_PASSWORD = "test123";
-        String query = "Select * from growth.merchant_lead where email = 'pulkit.agrawal+testingtoday@clover.com' order by created_time desc";
+        String query = "Select * from growth.merchant_lead where email = 'pulkit.agrawal+testingtoday@lover.com' order by created_time desc";
         Class.forName("com.mysql.cj.jdbc.Driver");
         con = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
         stmt = con.createStatement();
