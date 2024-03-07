@@ -48,7 +48,7 @@ public class Lead {
     private Order order;
 
     public Lead(){
-        this.email = "pulkit.agrawal+4353746031@clover.com";//generateEmail();
+        this.email = "pulkit.agrawal+testingtoday@clover.com";//generateEmail();
         this.firstName = "FN"+generateName();
         this.lastName = "LN"+generateName();
         this.phoneNumber = "4084120645";

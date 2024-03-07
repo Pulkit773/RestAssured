@@ -52,7 +52,7 @@ public class DbUtils {
     public static ResultSet dbConnection() throws ClassNotFoundException, SQLException {
         Connection con = null;
         Statement stmt;
-        String DB_URL = "jdbc:mysql://127.0.0.1:3306/growth?useSSL=false&allowPublicKeyRetrieval=true";
+        String DB_URL = "jdbc:mysql://127.0.0.1:3301/growth?useSSL=false&allowPublicKeyRetrieval=true";
         //String DB_URL = "jdbc:mysql://dev1-db01.dev.pdx10.clover.network:3306/meta?useSSL=false&allowPublicKeyRetrieval=true";
         String DB_USER = "growth-api";
         //String DB_USER = "remotereadonly";
